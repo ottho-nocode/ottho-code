@@ -10,7 +10,7 @@
 
 - Apprenants du cours Ottho (non-techniques avec bases création de site).
 - Toute personne qui veut **cadrer une feature avant de coder**, en gardant la simplicité.
-- Pas seulement pour les CRM : utilisable pour tout projet interne (RH, suivi clients, sondage, dashboard métier, etc.).
+- Utilisable pour **tout projet interne** : pas de présupposé sur le domaine.
 
 ## Ce que vous obtenez
 
@@ -85,29 +85,29 @@ Claude se sert des MCP `supabase`, `resend`, `vercel`, `github` pour exécuter.
 
 ---
 
-## Workflow complet (exemple cours CRM)
+## Workflow complet (du cadrage à la prod)
 
 ```
-1. /new-feature
-   → brainstorming pose 5 questions sur ton CRM agence
-   → spec-writer écrit specs/US-01-formulaire-contact.md
+1. /ottho-code:new-feature
+   → ottho-code_brainstorming pose 5 questions sur TON projet
+   → ottho-code_spec-writer écrit specs/US-01-<slug>.md
 
 2. Prompt Claude : "Initialise un projet Next.js dans ce dossier"
    → npx create-next-app exécuté
 
 3. Prompt Claude : "Crée un projet Supabase et configure-le pour cette feature"
-   → MCP supabase crée le projet, la table leads, applique RLS
+   → MCP supabase crée le projet, applique les migrations, active RLS
 
-4. Prompt Claude : "Génère la page /contact et la Server Action depuis la fiche"
+4. Prompt Claude : "Génère la page et la Server Action depuis ma fiche"
    → code généré, test local OK
 
-5. Prompt Claude : "Ajoute l'envoi d'emails Resend (lead + alerte agence)"
+5. Prompt Claude : "Ajoute l'envoi d'emails Resend selon ma fiche"
    → code complété, test local OK
 
 6. Prompt Claude : "Déploie en preview sur Vercel + crée le repo GitHub"
    → MCP vercel + MCP github
 
-7. Prompt Claude : "Crée une branche, change le texte du bouton, ouvre une PR"
+7. Prompt Claude : "Crée une branche, fais une modif, ouvre une PR"
    → workflow Git complet en CLI
 
 8. Prompt Claude : "Merge la PR et promote en production"

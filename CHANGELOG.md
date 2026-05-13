@@ -15,6 +15,6 @@
 ### Notes
 
 - Version "lite" du plugin Ottho Code App, dimensionnée pour le cours 2h.
-- 100 % générique : utilisable pour tout projet interne (CRM, RH, suivi clients, sondage, dashboard, etc.).
+- 100 % générique : utilisable pour tout projet interne, sans présupposé sur le domaine.
 - Pas de hooks, pas de scripts.
 - Pour la version complète (9 agents, hooks de sécurité, phases Plan/Implement/Validate), voir `ottho-code-app`.

@@ -20,7 +20,7 @@ Démarre la phase **Specify** du cycle SDD : cadrer la feature en deux étapes a
 
 Invoque l'agent `ottho-code_brainstorming` via `Task(...)` avec en contexte :
 - L'objectif : cadrer une nouvelle feature
-- Le contexte projet (si déjà connu) ou demander à l'utilisateur "C'est quel type de projet — CRM, outil RH, suivi clients, autre ?"
+- Le contexte projet : si déjà connu via le dossier courant, l'utiliser ; sinon laisser l'agent demander à l'utilisateur de décrire **son** besoin avec ses propres mots, sans suggérer de catégorie de projet pour ne pas biaiser la réponse.
 
 L'agent pose ses **5 questions structurantes** (problème, persona, succès, contraintes, hors-scope) et produit un **cadrage** structuré.
 
@@ -62,4 +62,4 @@ Les MCP disponibles :
 - Une seule feature à la fois (pas de cadrage parallèle).
 - Validation humaine obligatoire entre Brainstorm et Specify.
 - Tu n'écris **pas** de code dans cette commande — elle ne fait que produire la fiche SDD.
-- Tu fonctionnes pour **tout type de projet interne** (CRM, RH, suivi clients, sondage, dashboard, etc.).
+- Tu fonctionnes pour **tout type de projet interne**, sans présupposer le domaine. Laisse l'utilisateur décrire son besoin avec ses propres mots.
