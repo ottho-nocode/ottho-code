@@ -1,0 +1,29 @@
+{
+  "name": "ottho-code",
+  "metadata": {
+    "description": "Marketplace officiel du plugin ottho-code (cours Ottho 'Créer une application avec Claude Code')."
+  },
+  "owner": {
+    "name": "Ottho",
+    "url": "https://ottho.co"
+  },
+  "plugins": [
+    {
+      "name": "ottho-code",
+      "source": "./",
+      "description": "Méthode SDD légère pour projets internes Next.js + Supabase + Resend + Vercel. 2 agents (brainstorming, spec-writer), 4 MCP préconfigurés (Supabase, Resend, Vercel, GitHub).",
+      "version": "1.0.0",
+      "author": {
+        "name": "Ottho",
+        "url": "https://ottho.co"
+      },
+      "keywords": [
+        "ottho",
+        "sdd",
+        "spec-driven",
+        "nextjs",
+        "supabase"
+      ]
+    }
+  ]
+}

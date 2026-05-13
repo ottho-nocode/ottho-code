@@ -26,32 +26,42 @@
 
 ## Installation
 
-### Via dossier local (dev / cours)
-
 ```bash
-claude --plugin-dir <chemin vers ottho-code>
+git clone https://github.com/ottho-nocode/ottho-code.git ~/.claude/plugins/ottho-code
+~/.claude/plugins/ottho-code/install.sh
 ```
 
-### Via URL (une fois publié sur GitHub)
+Le script `install.sh` :
+- Enregistre le marketplace `ottho-code` dans la config user (`claude plugin marketplace add`)
+- Installe le plugin (`claude plugin install ottho-code@ottho-code`)
+
+À la première activation, Claude Code te demande tes credentials :
+
+| Token | Récupération | Obligatoire ? |
+|---|---|---|
+| `supabase_access_token` | https://supabase.com/dashboard/account/tokens | Oui pour le MCP supabase |
+| `resend_api_key` | https://resend.com/api-keys | Oui pour les emails (l'instructeur fournit la sienne en cours) |
+| `vercel_token` | https://vercel.com/account/tokens | Oui pour le déploiement |
+| `github_token` | https://github.com/settings/tokens | Optionnel (OAuth auto sinon) |
+
+Tous les tokens sont **sensitive** : stockés dans le keychain système, jamais en clair dans `settings.json`.
+
+### Désinstallation
 
 ```bash
-claude --plugin-url https://github.com/ottho-nocode/ottho-code
+~/.claude/plugins/ottho-code/uninstall.sh
 ```
 
-### Via marketplace
+Pour supprimer aussi les fichiers du repo : `rm -rf ~/.claude/plugins/ottho-code/`
+
+### Install alternative (sans clone)
 
 ```bash
-claude plugin marketplace add ottho/claude-plugins
-claude plugin install ottho-code@ottho
+claude plugin marketplace add ottho-nocode/ottho-code
+claude plugin install ottho-code@ottho-code
 ```
 
-À l'install, Claude Code vous demande vos credentials :
-- `supabase_access_token` — créer sur https://supabase.com/dashboard/account/tokens
-- `resend_api_key` — créer sur https://resend.com/api-keys (en cours, l'instructeur fournit sa clé)
-- `vercel_token` — créer sur https://vercel.com/account/tokens
-- `github_token` — optionnel (OAuth auto sinon)
-
-Tous **sensitive** : stockés en keychain système, jamais en clair dans `settings.json`.
+Identique fonctionnellement, mais sans le repo local persistant pour inspection/contribution.
 
 ---
 
