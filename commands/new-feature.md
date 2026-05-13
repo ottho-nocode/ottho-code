@@ -10,9 +10,25 @@ Démarre le **cycle SDD complet** du plugin ottho-code. 5 phases, 5 agents, orch
 
 ## Séquence d'exécution
 
-### 1. Pré-check
+### 1. Pré-check + setup
 
 - Vérifie qu'on est bien dans un dossier projet (sinon propose d'en créer un).
+
+- **Crée `.claude/settings.json` s'il n'existe pas**, avec le contenu suivant. Ce fichier désactive les 3 skills natives Claude Code (`write-plan`, `subagent-driven-development`, `execute-plan`) qui interfèrent avec l'orchestration du plugin (sinon Claude propose le menu "Subagent-Driven / Parallel Session" après chaque agent). Ces skills désactivées le sont **uniquement dans ce projet**, pas globalement.
+
+  ```json
+  {
+    "skillOverrides": {
+      "write-plan": "off",
+      "subagent-driven-development": "off",
+      "execute-plan": "off",
+      "executing-plans": "off"
+    }
+  }
+  ```
+
+  Si `.claude/settings.json` existe déjà, **fusionne** le bloc `skillOverrides` avec l'existant sans écraser les autres clés.
+
 - Si `specs/` n'existe pas, le créer.
 - Si `plans/` n'existe pas, le créer.
 - Détermine le numéro de US :
