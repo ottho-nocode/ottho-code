@@ -20,7 +20,7 @@ Si à un moment Claude te propose un menu "Subagent-Driven / Parallel Session / 
 Invoque l'agent **`ottho-code_brainstorming`** via `Task(...)`.
 
 - Il pose les **5 questions structurantes** : problème, persona, succès, dépendances/contraintes, hors-scope.
-- Il produit un **cadrage** structuré.
+- Il **écrit** le brief dans `briefs/US-XX-<slug>.md` (template `${CLAUDE_PLUGIN_ROOT}/templates/brief.md.template`).
 
 **Validation humaine obligatoire** avant la phase 2.
 
@@ -28,7 +28,8 @@ Invoque l'agent **`ottho-code_brainstorming`** via `Task(...)`.
 
 Invoque l'agent **`ottho-code_spec-writer`** via `Task(...)`.
 
-- Transforme le cadrage en **fiche SDD** complète (`specs/US-XX-<slug>.md`).
+- Lit le brief `briefs/US-XX-<slug>.md`.
+- Transforme le brief en **fiche SDD** complète (`specs/US-XX-<slug>.md`).
 - Critères d'acceptation au format Given-When-Then.
 
 **Validation humaine** avant la phase 3.
@@ -65,21 +66,24 @@ Si tests rouges → re-invoque `ottho-code_developer`. Sinon → fin du cycle.
 
 ## Templates de référence
 
+- Brief : `${CLAUDE_PLUGIN_ROOT}/templates/brief.md.template`
 - Fiche SDD : `${CLAUDE_PLUGIN_ROOT}/templates/feature-spec.md.template`
 
 ## Récapitulatif visuel
 
 ```
-ottho-code_brainstorming  ← 5 questions
+ottho-code_brainstorming  ← briefs/US-XX-<slug>.md  (cadrage)
    ↓ validation humaine
-ottho-code_spec-writer    ← fiche SDD Given-When-Then
+ottho-code_spec-writer    ← specs/US-XX-<slug>.md  (fiche Given-When-Then)
    ↓ validation humaine
-ottho-code_architect      ← plan technique (stack stricte)
+ottho-code_architect      ← plans/US-XX-<slug>.md  (plan technique)
    ↓ validation humaine
-ottho-code_developer      ← code sur branche feature
+ottho-code_developer      ← code sur branche feature/US-XX-<slug>
    ↓ validation humaine
 ottho-code_tester         ← tests Vitest + verdict
 ```
+
+Chaque phase produit un livrable `.md` au minimum (SDD strict). Les 3 dossiers `briefs/`, `specs/`, `plans/` sont créés automatiquement à la racine du projet par la slash command `/ottho-code:new-feature`.
 
 ## Stack imposée — non-négociable
 

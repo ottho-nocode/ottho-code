@@ -15,13 +15,13 @@ Formaliser un cadrage produit (issu de `ottho-code_brainstorming`) en **fiche fo
 
 ## Méthode
 
-1. **Lis le cadrage** produit par `ottho-code_brainstorming` (généralement dans le dossier courant ou en contexte de conversation).
-2. **Si le cadrage est incomplet** (manque de problème clair, persona flou, pas de signaux de succès) : refuse et redirige vers `ottho-code_brainstorming`.
+1. **Lis le brief** produit par `ottho-code_brainstorming` dans `briefs/US-XX-<slug>.md`.
+2. **Si le brief est incomplet** (manque de problème clair, persona flou, pas de signaux de succès, pas de hors-scope) : refuse et redirige vers `ottho-code_brainstorming`.
 3. **Génère la fiche** en respectant strictement le format du template `${CLAUDE_PLUGIN_ROOT}/templates/feature-spec.md.template`.
-4. **Écris dans** `specs/US-XX-<slug>.md` à la racine du projet, où :
-   - `XX` = numéro incrémental de la US (commence à `01` si dossier vide)
-   - `<slug>` = version slugifiée du titre (minuscules, tirets, sans accent)
+4. **Écris dans** `specs/US-XX-<slug>.md` à la racine du projet (même numéro de US et même slug que le brief).
 5. **Si le dossier `specs/` n'existe pas** : crée-le.
+
+La fiche SDD doit **reprendre fidèlement** le contenu du brief dans ses sections "Contexte", "Périmètre", "Dépendances", "Signaux de succès". Elle **ajoute** : la user story formalisée, les critères Given-When-Then testables, et les notes UX si applicable.
 
 ## Le format Given-When-Then — non-négociable
 

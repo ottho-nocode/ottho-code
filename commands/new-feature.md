@@ -41,31 +41,34 @@ Démarre le **cycle SDD complet** du plugin ottho-code. 5 phases, 5 agents, orch
   - **Implement** → désactive `subagent-driven-development`/`dispatching-parallel-agents` (sinon menu après chaque commit de l'implémentation)
   - **Validate** → désactive `requesting-code-review`/`finishing-a-development-branch` (sinon menu après les tests verts)
 
+- Si `briefs/` n'existe pas, le créer.
 - Si `specs/` n'existe pas, le créer.
 - Si `plans/` n'existe pas, le créer.
 - Détermine le numéro de US :
-   - Liste les fichiers `specs/US-*.md`
+   - Liste les fichiers `briefs/US-*.md` et `specs/US-*.md`
    - Le nouveau numéro = max(existants) + 1 (padding 2 chiffres : `US-01`, `US-02`)
+   - Ce numéro est **partagé** entre brief, spec et plan d'une même feature.
 
 ### 2. Phase Brainstorm
 
 Invoque l'agent **`ottho-code_brainstorming`** via `Task(...)` avec en contexte :
 - L'objectif : cadrer une nouvelle feature
+- Le numéro de US déterminé à l'étape 1
 - Le contexte projet : si déjà connu via le dossier courant, l'utiliser ; sinon laisser l'agent demander à l'utilisateur de décrire **son** besoin sans suggérer de catégorie.
 
-L'agent pose ses **5 questions structurantes** (problème, persona, succès, contraintes, hors-scope) et produit un cadrage structuré.
+L'agent pose ses **5 questions structurantes** (problème, persona, succès, contraintes, hors-scope) et **écrit** le brief dans `briefs/US-XX-<slug>.md`.
 
-**STOP** — affiche le cadrage et demande validation à l'utilisateur :
-> "Cadrage validé ? Tape `oui` pour passer à la rédaction de la fiche SDD, ou `non` + tes ajustements."
+**STOP** — affiche le brief et demande validation :
+> "Brief validé ? Tape `oui` pour passer à la rédaction de la fiche SDD, ou `non` + tes ajustements."
 
 ### 3. Phase Specify
 
-Une fois le cadrage validé, invoque **`ottho-code_spec-writer`** via `Task(...)` avec :
-- Le cadrage de brainstorming
-- Le numéro de US
+Une fois le brief validé, invoque **`ottho-code_spec-writer`** via `Task(...)` avec :
+- Le chemin du brief : `briefs/US-XX-<slug>.md`
+- Le numéro de US (même que le brief)
 - Le template `${CLAUDE_PLUGIN_ROOT}/templates/feature-spec.md.template`
 
-L'agent produit la fiche dans `specs/US-XX-<slug>.md`.
+L'agent lit le brief et produit la fiche SDD dans `specs/US-XX-<slug>.md`.
 
 **STOP** — validation humaine :
 > "Fiche SDD validée ? Tape `oui` pour passer au plan technique, ou `non` + tes ajustements."
@@ -109,6 +112,7 @@ Affiche un récap final :
 ```
 ✅ Cycle SDD terminé pour US-XX
 
+📋 Brief : briefs/US-XX-<slug>.md
 📄 Fiche SDD : specs/US-XX-<slug>.md
 🛠️  Plan technique : plans/US-XX-<slug>.md
 💻 Code : branche feature/US-XX-<slug>

@@ -1,0 +1,67 @@
+# Brief — US-{{US_NUMBER}} — {{FEATURE_TITLE}}
+
+> Cadrage produit par `ottho-code_brainstorming` à partir des 5 questions structurantes.
+> Sert de base à `ottho-code_spec-writer` pour rédiger la fiche SDD complète.
+>
+> Date : {{DATE}}
+> Statut : ⏳ Brief / ✅ Validé
+
+---
+
+## 1. Problème
+
+{{PROBLEM}}
+
+*Quel est le problème concret que cette feature résout ? Pour qui, dans quelle situation ?*
+
+---
+
+## 2. Persona
+
+{{PERSONA}}
+
+*Rôle, contexte, contrainte principale. En une phrase.*
+
+---
+
+## 3. Signaux de succès
+
+- {{SUCCESS_SIGNAL_1}}
+- {{SUCCESS_SIGNAL_2}}
+
+*Mesurables, observables. Pas "ça doit bien marcher".*
+
+---
+
+## 4. Dépendances et contraintes
+
+**Dépendances** :
+- {{DEPENDENCY_1}}
+- {{DEPENDENCY_2}}
+
+**Non-négociable** :
+- {{NON_NEGOTIABLE_1}}
+- {{NON_NEGOTIABLE_2}}
+
+---
+
+## 5. Hors-scope (V1)
+
+- {{EXCLUDED_1}}
+- {{EXCLUDED_2}}
+- {{EXCLUDED_3}}
+
+*Ce que la feature **n'est pas**. C'est ce qui empêche la dérive.*
+
+---
+
+## 6. Questions ouvertes
+
+- [ ] {{OPEN_QUESTION_1}}
+- [ ] {{OPEN_QUESTION_2}}
+
+---
+
+## 7. Prochaine étape
+
+→ Invoque `ottho-code_spec-writer` avec ce brief pour produire la fiche SDD complète dans `specs/US-{{US_NUMBER}}-{{SLUG}}.md`.

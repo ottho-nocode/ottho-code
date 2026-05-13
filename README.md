@@ -14,16 +14,16 @@
 
 ## Ce que vous obtenez
 
-- **5 agents spécialisés** qui couvrent le cycle SDD complet :
-  - `ottho-code_brainstorming` — 5 questions structurantes pour cadrer
-  - `ottho-code_spec-writer` — fiche SDD Given-When-Then
-  - `ottho-code_architect` — plan technique (stack imposée stricte)
-  - `ottho-code_developer` — code sur branche feature
-  - `ottho-code_tester` — tests Vitest + verdict
+- **5 agents spécialisés** qui couvrent le cycle SDD complet, **chacun produisant un livrable `.md`** :
+  - `ottho-code_brainstorming` → `briefs/US-XX-<slug>.md` (cadrage 5 questions)
+  - `ottho-code_spec-writer` → `specs/US-XX-<slug>.md` (fiche Given-When-Then)
+  - `ottho-code_architect` → `plans/US-XX-<slug>.md` (plan technique)
+  - `ottho-code_developer` → code sur `feature/US-XX-<slug>`
+  - `ottho-code_tester` → tests Vitest + verdict
 - **1 skill** : `ottho-code_sdd-feature-cycle` — orchestre les 5 agents en séquence
 - **1 slash command** : `/ottho-code:new-feature` — démarre le cycle complet
 - **4 MCP préconfigurés** : `supabase`, `resend`, `vercel`, `github`
-- **1 template** : `feature-spec.md.template`
+- **2 templates** : `brief.md.template`, `feature-spec.md.template`
 
 **Stack imposée non-négociable** : Next.js 16 + Tailwind + shadcn/ui + Supabase (via `@supabase/ssr`, sans ORM) + Resend SDK + Vercel. Pas de Drizzle. Pas de GitHub Actions YAML. Pas de complexité moderne superflue.
 
