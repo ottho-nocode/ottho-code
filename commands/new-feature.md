@@ -12,7 +12,7 @@ Démarre le **cycle SDD complet** du plugin ottho-code. 5 phases, 5 agents, orch
 
 ### 1. Pré-check + setup
 
-- Vérifie qu'on est bien dans un dossier projet (sinon propose d'en créer un).
+- **Vérifie qu'on est dans un projet déjà bootstrappé** : présence d'un `package.json` à la racine. Si absent : refuse et redirige l'utilisateur vers `/ottho-code:new-project` pour démarrer un nouveau projet.
 
 - **Crée `.claude/settings.json` s'il n'existe pas**, avec le contenu suivant. Ce fichier désactive les skills natives Claude Code qui interfèrent avec l'orchestration des 5 phases du plugin (sinon Claude propose un menu "Subagent-Driven / Parallel Session" après chaque agent, ou détourne le flow vers des skills comme `requesting-code-review` ou `finishing-a-development-branch`). Ces skills désactivées le sont **uniquement dans ce projet**, pas globalement.
 

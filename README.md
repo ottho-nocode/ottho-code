@@ -67,11 +67,15 @@ Identique fonctionnellement, mais permet de garder le repo localement pour inspe
 
 ## Slash commands disponibles
 
-7 commandes au total. La maîtresse `/ottho-code:new-feature` orchestre tout. Les 5 phases peuvent aussi être lancées individuellement pour itérer.
+8 commandes au total. Deux points d'entrée principaux selon ton point de départ :
 
-| Commande | Phase SDD | Livrable produit | Pré-requis |
+- **Dossier vide, nouveau projet** → `/ottho-code:new-project` (bootstrap Next.js + structure SDD)
+- **Projet existant, nouvelle US** → `/ottho-code:new-feature` (cycle SDD complet)
+
+| Commande | Phase | Livrable | Pré-requis |
 |---|---|---|---|
-| `/ottho-code:new-feature` | Cycle complet (5 phases) | brief + spec + plan + code + tests | aucun |
+| `/ottho-code:new-project` | **Bootstrap** | Next.js + structure SDD + `CLAUDE.md` | dossier vide |
+| `/ottho-code:new-feature` | Cycle complet (5 phases) | brief + spec + plan + code + tests | un `package.json` existant |
 | `/ottho-code:brainstorm` | Brainstorm | `briefs/US-XX-<slug>.md` | aucun |
 | `/ottho-code:spec` | Specify | `specs/US-XX-<slug>.md` | un brief existant |
 | `/ottho-code:plan` | Plan | `plans/US-XX-<slug>.md` | une spec existante |
@@ -79,7 +83,23 @@ Identique fonctionnellement, mais permet de garder le repo localement pour inspe
 | `/ottho-code:test` | Validate | tests Vitest + rapport | du code sur une branche feature |
 | `/ottho-code:status` | (utilitaire) | tableau d'état du projet | aucun |
 
-### Démarrer une nouvelle feature de bout en bout
+### Démarrer un projet from scratch
+
+Dossier vide, aucun `package.json` :
+
+```
+/ottho-code:new-project
+```
+
+Le plugin :
+1. Demande le nom et la description du projet
+2. Init Next.js (TypeScript + Tailwind + App Router) via `npx create-next-app`
+3. Crée la structure SDD (`briefs/`, `specs/`, `plans/`, `docs/`) + le `CLAUDE.md` du projet
+4. Crée `.claude/settings.json` avec `skillOverrides`
+5. (Optionnel) Init Git + repo GitHub + projet Supabase + Vercel link
+6. Te suggère de lancer `/ottho-code:new-feature` pour la première US
+
+### Démarrer une nouvelle feature de bout en bout (projet déjà existant)
 
 ```
 /ottho-code:new-feature
