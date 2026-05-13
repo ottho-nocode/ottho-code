@@ -1,0 +1,52 @@
+{
+  "name": "ottho-code",
+  "version": "1.0.0",
+  "description": "Méthode SDD légère pour projets internes Next.js + Supabase + Resend + Vercel. 2 agents (brainstorming, spec-writer), 4 MCP, 1 template. Plugin compagnon du cours Ottho \"Créer une application avec Claude Code\".",
+  "author": {
+    "name": "Ottho",
+    "url": "https://ottho.co"
+  },
+  "homepage": "https://github.com/ottho-nocode/ottho-code",
+  "repository": "https://github.com/ottho-nocode/ottho-code",
+  "license": "MIT",
+  "keywords": [
+    "ottho",
+    "sdd",
+    "spec-driven",
+    "nextjs",
+    "supabase",
+    "resend",
+    "vercel",
+    "cours"
+  ],
+  "userConfig": {
+    "supabase_access_token": {
+      "type": "string",
+      "title": "Supabase access token",
+      "description": "Personal access token depuis le dashboard Supabase (https://supabase.com/dashboard/account/tokens).",
+      "sensitive": true,
+      "required": false
+    },
+    "resend_api_key": {
+      "type": "string",
+      "title": "Resend API key",
+      "description": "Clé API Resend (https://resend.com/api-keys). En cours, l'instructeur fournit sa propre clé.",
+      "sensitive": true,
+      "required": false
+    },
+    "vercel_token": {
+      "type": "string",
+      "title": "Vercel token",
+      "description": "Token Vercel (https://vercel.com/account/tokens).",
+      "sensitive": true,
+      "required": false
+    },
+    "github_token": {
+      "type": "string",
+      "title": "GitHub personal access token (optionnel)",
+      "description": "Token GitHub si l'apprenant veut créer des repos / PR via le MCP github plutôt que via l'OAuth interactive.",
+      "sensitive": true,
+      "required": false
+    }
+  }
+}

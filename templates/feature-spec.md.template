@@ -1,0 +1,114 @@
+# US-{{US_NUMBER}} — {{FEATURE_TITLE}}
+
+> Fiche fonctionnalité SDD. Produite par `spec-writer` à partir du cadrage de `brainstorming`.
+> Sert de cahier des charges pour la génération de code qui suivra.
+>
+> Date : {{DATE}}
+> Statut : ⏳ Specify / 💻 Implement / 🚀 Shipped
+
+---
+
+## 1. Contexte
+
+{{CONTEXT}}
+
+*Quel est le problème métier ou utilisateur qui justifie cette feature ? En 2-3 phrases.*
+
+---
+
+## 2. User story
+
+> **En tant que** {{PERSONA}}
+> **Je veux** {{ACTION}}
+> **Afin de** {{BENEFIT}}
+
+---
+
+## 3. Critères d'acceptation (Given-When-Then)
+
+### AC1 — {{AC1_TITLE}}
+
+```
+GIVEN {{AC1_GIVEN}}
+WHEN  {{AC1_WHEN}}
+THEN  {{AC1_THEN}}
+```
+
+### AC2 — {{AC2_TITLE}}
+
+```
+GIVEN {{AC2_GIVEN}}
+WHEN  {{AC2_WHEN}}
+THEN  {{AC2_THEN}}
+AND   {{AC2_AND}}
+```
+
+### AC3 — {{AC3_TITLE}}
+
+```
+GIVEN {{AC3_GIVEN}}
+WHEN  {{AC3_WHEN}}
+THEN  {{AC3_THEN}}
+```
+
+*(2 à 4 critères. Chaque critère doit être testable : tu dois pouvoir imaginer un test automatique qui le valide.)*
+
+---
+
+## 4. Périmètre
+
+### ✅ Inclus
+
+- {{INCLUDED_1}}
+- {{INCLUDED_2}}
+- {{INCLUDED_3}}
+
+### ❌ Exclu (hors V1)
+
+- {{EXCLUDED_1}}
+- {{EXCLUDED_2}}
+- {{EXCLUDED_3}}
+
+*Le hors-scope est la partie la plus importante : c'est ce qui empêche la feature de déraper en cours de route.*
+
+---
+
+## 5. Dépendances et contraintes
+
+- **Tables BDD** : {{DB_TABLES}}
+- **Endpoints existants utilisés** : {{EXISTING_ENDPOINTS}}
+- **Intégrations tierces** : {{THIRD_PARTY}} *(ex : Resend pour les emails, Stripe pour le paiement)*
+- **Dépend d'autres US** : {{US_DEPENDENCIES}} *(laisser vide si aucune)*
+- **Non-négociable** : {{NON_NEGOTIABLE}} *(légal, sécurité, deadline)*
+
+---
+
+## 6. Signaux de succès
+
+Comment on saura que la feature marche en production :
+
+- {{SUCCESS_SIGNAL_1}}
+- {{SUCCESS_SIGNAL_2}}
+
+*(Mesurable et observable. Pas "les utilisateurs sont contents".)*
+
+---
+
+## 7. Questions ouvertes
+
+- [ ] {{OPEN_QUESTION_1}}
+- [ ] {{OPEN_QUESTION_2}}
+
+*(À trancher avant de générer le code.)*
+
+---
+
+## 8. Prochaine étape
+
+→ Génère le code à partir de cette fiche en dialoguant avec Claude :
+
+```
+À partir de specs/US-{{US_NUMBER}}-{{SLUG}}.md, génère le code Next.js de cette feature.
+Utilise le MCP supabase pour créer les tables avec RLS, le MCP resend pour les emails,
+le MCP vercel pour le déploiement, et le MCP github pour le repo.
+```

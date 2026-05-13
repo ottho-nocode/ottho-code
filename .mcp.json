@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp",
+      "headers": {
+        "Authorization": "Bearer ${user_config.supabase_access_token}"
+      }
+    },
+    "resend": {
+      "type": "http",
+      "url": "https://mcp.resend.com",
+      "headers": {
+        "Authorization": "Bearer ${user_config.resend_api_key}"
+      }
+    },
+    "vercel": {
+      "type": "http",
+      "url": "https://mcp.vercel.com"
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp"
+    }
+  }
+}
