@@ -11,8 +11,7 @@
     {
       "name": "ottho-code",
       "source": "./",
-      "description": "Méthode SDD légère pour projets internes Next.js + Supabase + Resend + Vercel. 2 agents (brainstorming, spec-writer), 4 MCP préconfigurés (Supabase, Resend, Vercel, GitHub).",
-      "version": "1.0.0",
+      "description": "Méthode SDD légère pour projets internes Next.js + Supabase + Resend + Vercel. 5 agents, 7 slash commands, 4 MCP préconfigurés (Supabase, Resend, Vercel, GitHub).",
       "author": {
         "name": "Ottho",
         "url": "https://ottho.co"

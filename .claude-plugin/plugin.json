@@ -1,7 +1,6 @@
 {
   "name": "ottho-code",
-  "version": "1.0.0",
-  "description": "Méthode SDD légère pour projets internes Next.js + Supabase + Resend + Vercel. 2 agents (brainstorming, spec-writer), 4 MCP, 1 template. Plugin compagnon du cours Ottho \"Créer une application avec Claude Code\".",
+  "description": "Méthode SDD légère pour projets internes Next.js + Supabase + Resend + Vercel. 5 agents (brainstorming, spec-writer, architect, developer, tester), 7 slash commands, 4 MCP, 2 templates. Plugin compagnon du cours Ottho \"Créer une application avec Claude Code\".",
   "author": {
     "name": "Ottho",
     "url": "https://ottho.co"
