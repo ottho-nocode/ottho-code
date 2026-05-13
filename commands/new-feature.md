@@ -14,20 +14,32 @@ Démarre le **cycle SDD complet** du plugin ottho-code. 5 phases, 5 agents, orch
 
 - Vérifie qu'on est bien dans un dossier projet (sinon propose d'en créer un).
 
-- **Crée `.claude/settings.json` s'il n'existe pas**, avec le contenu suivant. Ce fichier désactive les 3 skills natives Claude Code (`write-plan`, `subagent-driven-development`, `execute-plan`) qui interfèrent avec l'orchestration du plugin (sinon Claude propose le menu "Subagent-Driven / Parallel Session" après chaque agent). Ces skills désactivées le sont **uniquement dans ce projet**, pas globalement.
+- **Crée `.claude/settings.json` s'il n'existe pas**, avec le contenu suivant. Ce fichier désactive les skills natives Claude Code qui interfèrent avec l'orchestration des 5 phases du plugin (sinon Claude propose un menu "Subagent-Driven / Parallel Session" après chaque agent, ou détourne le flow vers des skills comme `requesting-code-review` ou `finishing-a-development-branch`). Ces skills désactivées le sont **uniquement dans ce projet**, pas globalement.
 
   ```json
   {
     "skillOverrides": {
+      "brainstorming": "off",
+      "brainstorm": "off",
       "write-plan": "off",
+      "writing-plans": "off",
       "subagent-driven-development": "off",
       "execute-plan": "off",
-      "executing-plans": "off"
+      "executing-plans": "off",
+      "dispatching-parallel-agents": "off",
+      "finishing-a-development-branch": "off",
+      "requesting-code-review": "off"
     }
   }
   ```
 
   Si `.claude/settings.json` existe déjà, **fusionne** le bloc `skillOverrides` avec l'existant sans écraser les autres clés.
+
+  Couverture par phase :
+  - **Brainstorm** → désactive `brainstorming`/`brainstorm` (sinon doublon avec notre agent)
+  - **Specify / Plan** → désactive `write-plan`/`writing-plans`/`execute-plan`/`executing-plans` (sinon menu après le cadrage et après le plan technique)
+  - **Implement** → désactive `subagent-driven-development`/`dispatching-parallel-agents` (sinon menu après chaque commit de l'implémentation)
+  - **Validate** → désactive `requesting-code-review`/`finishing-a-development-branch` (sinon menu après les tests verts)
 
 - Si `specs/` n'existe pas, le créer.
 - Si `plans/` n'existe pas, le créer.
