@@ -1,5 +1,5 @@
 ---
-name: sdd-feature-cycle
+name: ottho-code_sdd-feature-cycle
 description: Use when the user wants to add a new feature, build a new module, implement a user story, start a new internal project, or asks "how do I build X". Guides through the SDD Specify phase using 2 agents (brainstorming → spec-writer) before any code is written. Triggers on phrases like "nouvelle feature", "ajouter une fonctionnalité", "nouveau projet interne", "je veux construire".
 ---
 
@@ -20,7 +20,7 @@ Avant d'écrire **une seule ligne de code**, on cadre :
 
 ### Étape 1 — Brainstorm
 
-Invoque l'agent **`brainstorming`** via `Task(...)`.
+Invoque l'agent **`ottho-code_brainstorming`** via `Task(...)`.
 
 - Il pose les 5 questions structurantes.
 - Il refuse de continuer tant qu'une réponse est vague.
@@ -30,7 +30,7 @@ Invoque l'agent **`brainstorming`** via `Task(...)`.
 
 ### Étape 2 — Specify
 
-Invoque l'agent **`spec-writer`** via `Task(...)`.
+Invoque l'agent **`ottho-code_spec-writer`** via `Task(...)`.
 
 - Il transforme le cadrage en fiche SDD complète.
 - Il utilise le template `${CLAUDE_PLUGIN_ROOT}/templates/feature-spec.md.template`.
@@ -53,9 +53,9 @@ La fiche SDD reste la **source de vérité** : à chaque fois que tu hésites, t
 ## Récapitulatif rapide
 
 ```
-brainstorming        ← 5 questions structurantes
+ottho-code_brainstorming   ← 5 questions structurantes
    ↓ validation humaine
-spec-writer          ← fiche SDD Given-When-Then
+ottho-code_spec-writer     ← fiche SDD Given-When-Then
    ↓ validation humaine
 [dialogue libre]     ← Claude génère le code en s'appuyant sur la fiche
                        (MCP supabase, resend, vercel, github)

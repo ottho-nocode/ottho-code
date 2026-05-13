@@ -18,7 +18,7 @@ Démarre la phase **Specify** du cycle SDD : cadrer la feature en deux étapes a
 
 ### 2. Brainstorm
 
-Invoque l'agent `brainstorming` via `Task(...)` avec en contexte :
+Invoque l'agent `ottho-code_brainstorming` via `Task(...)` avec en contexte :
 - L'objectif : cadrer une nouvelle feature
 - Le contexte projet (si déjà connu) ou demander à l'utilisateur "C'est quel type de projet — CRM, outil RH, suivi clients, autre ?"
 
@@ -29,12 +29,12 @@ L'agent pose ses **5 questions structurantes** (problème, persona, succès, con
 
 ### 3. Specify
 
-Une fois le cadrage validé, invoque l'agent `spec-writer` via `Task(...)` avec en contexte :
-- Le cadrage produit par `brainstorming`
+Une fois le cadrage validé, invoque l'agent `ottho-code_spec-writer` via `Task(...)` avec en contexte :
+- Le cadrage produit par `ottho-code_brainstorming`
 - Le numéro de US déterminé à l'étape 1
 - Le template `${CLAUDE_PLUGIN_ROOT}/templates/feature-spec.md.template`
 
-`spec-writer` produit la fiche dans `specs/US-XX-<slug>.md`.
+`ottho-code_spec-writer` produit la fiche dans `specs/US-XX-<slug>.md`.
 
 ### 4. Conclusion
 

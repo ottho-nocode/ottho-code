@@ -4,8 +4,8 @@
 
 ### Ajouté
 
-- **2 agents** : `brainstorming` (5 questions structurantes), `spec-writer` (fiche SDD Given-When-Then).
-- **1 skill** : `sdd-feature-cycle` — orchestre Brainstorm → Specify.
+- **2 agents** : `ottho-code_brainstorming` (5 questions structurantes), `ottho-code_spec-writer` (fiche SDD Given-When-Then).
+- **1 skill** : `ottho-code_sdd-feature-cycle` — orchestre Brainstorm → Specify.
 - **1 slash command** : `/new-feature` — démarre le cycle de cadrage.
 - **4 MCP préconfigurés** : `supabase`, `resend`, `vercel`, `github`.
 - **1 template** : `feature-spec.md.template`.

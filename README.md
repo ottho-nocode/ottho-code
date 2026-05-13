@@ -14,8 +14,8 @@
 
 ## Ce que vous obtenez
 
-- **2 agents spécialisés** : `brainstorming` (pose les 5 questions structurantes) et `spec-writer` (écrit la fiche SDD).
-- **1 skill** : `sdd-feature-cycle` — orchestre les deux agents.
+- **2 agents spécialisés** : `ottho-code_brainstorming` (pose les 5 questions structurantes) et `ottho-code_spec-writer` (écrit la fiche SDD).
+- **1 skill** : `ottho-code_sdd-feature-cycle` — orchestre les deux agents.
 - **1 slash command** : `/new-feature` — démarre le cycle.
 - **4 MCP préconfigurés** : `supabase`, `resend`, `vercel`, `github`.
 - **1 template** : `feature-spec.md.template` — fiche SDD avec Given-When-Then.
@@ -70,9 +70,9 @@ Identique fonctionnellement, mais permet de garder le repo localement pour inspe
 
 Le plugin enchaîne :
 
-1. **`brainstorming`** pose 5 questions structurantes (problème, persona, succès, dépendances, hors-scope).
+1. **`ottho-code_brainstorming`** pose 5 questions structurantes (problème, persona, succès, dépendances, hors-scope).
 2. **Validation humaine.**
-3. **`spec-writer`** écrit la fiche dans `specs/US-XX-<slug>.md`.
+3. **`ottho-code_spec-writer`** écrit la fiche dans `specs/US-XX-<slug>.md`.
 
 ### Ensuite, vous prompez Claude directement
 
@@ -122,8 +122,8 @@ Claude se sert des MCP `supabase`, `resend`, `vercel`, `github` pour exécuter.
 
 | Agent | Rôle | Modèle |
 |---|---|---|
-| `brainstorming` | Pose les 5 questions structurantes pour cadrer une feature | opus |
-| `spec-writer` | Transforme le cadrage en fiche SDD Given-When-Then | sonnet |
+| `ottho-code_brainstorming` | Pose les 5 questions structurantes pour cadrer une feature | opus |
+| `ottho-code_spec-writer` | Transforme le cadrage en fiche SDD Given-When-Then | sonnet |
 
 Chaque agent **recommande** explicitement le suivant à la fin de sa réponse. L'orchestration est faite par le thread principal ou par la slash command `/new-feature`.
 
