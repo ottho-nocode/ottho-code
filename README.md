@@ -27,13 +27,9 @@
 ## Installation
 
 ```bash
-git clone https://github.com/ottho-nocode/ottho-code.git ~/.claude/plugins/ottho-code
-~/.claude/plugins/ottho-code/install.sh
+claude plugin marketplace add ottho-nocode/ottho-code
+claude plugin install ottho-code@ottho-code
 ```
-
-Le script `install.sh` :
-- Enregistre le marketplace `ottho-code` dans la config user (`claude plugin marketplace add`)
-- Installe le plugin (`claude plugin install ottho-code@ottho-code`)
 
 À la première activation, Claude Code te demande tes credentials :
 
@@ -49,19 +45,18 @@ Tous les tokens sont **sensitive** : stockés dans le keychain système, jamais 
 ### Désinstallation
 
 ```bash
-~/.claude/plugins/ottho-code/uninstall.sh
+claude plugin uninstall ottho-code
+claude plugin marketplace remove ottho-code
 ```
 
-Pour supprimer aussi les fichiers du repo : `rm -rf ~/.claude/plugins/ottho-code/`
-
-### Install alternative (sans clone)
+### Install alternative (clone + script, style ottho-design)
 
 ```bash
-claude plugin marketplace add ottho-nocode/ottho-code
-claude plugin install ottho-code@ottho-code
+git clone https://github.com/ottho-nocode/ottho-code.git ~/.claude/plugins/ottho-code
+~/.claude/plugins/ottho-code/install.sh
 ```
 
-Identique fonctionnellement, mais sans le repo local persistant pour inspection/contribution.
+Identique fonctionnellement, mais permet de garder le repo localement pour inspection/contribution.
 
 ---
 
