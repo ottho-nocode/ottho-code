@@ -1,65 +1,102 @@
 ---
-description: Démarre le cycle SDD light pour cadrer une nouvelle feature (brainstorming + spec-writer)
+description: Cycle SDD complet (Brainstorm → Specify → Plan → Implement → Validate) orchestré par 5 agents du plugin ottho-code
 ---
 
-# /new-feature
+# /ottho-code:new-feature
 
-Démarre la phase **Specify** du cycle SDD : cadrer la feature en deux étapes avec deux agents spécialisés, avant d'écrire la moindre ligne de code.
+Démarre le **cycle SDD complet** du plugin ottho-code. 5 phases, 5 agents, orchestrés en séquence avec une validation humaine entre chaque.
+
+⚠️ **N'utilise PAS le mode plan natif Claude Code** (`EnterPlanMode`, skills `write-plan`, `subagent-driven-development`, `execute-plan`). Toute l'orchestration passe par les agents du plugin ottho-code. Si à un moment Claude te propose un menu "Subagent-Driven / Parallel Session / Type something / Chat about this", refuse et continue le cycle des agents.
 
 ## Séquence d'exécution
 
 ### 1. Pré-check
 
-- Vérifie qu'on est bien dans un dossier projet (ou propose d'en créer un : "Tu veux que je crée un dossier projet ici ?").
-- Si le dossier `specs/` n'existe pas, on le créera à l'étape 3.
+- Vérifie qu'on est bien dans un dossier projet (sinon propose d'en créer un).
+- Si `specs/` n'existe pas, le créer.
+- Si `plans/` n'existe pas, le créer.
 - Détermine le numéro de US :
-   - Liste les fichiers existants `specs/US-*.md`
-   - Le nouveau numéro = max(existants) + 1, padding sur 2 chiffres (`US-01`, `US-02`, ...)
+   - Liste les fichiers `specs/US-*.md`
+   - Le nouveau numéro = max(existants) + 1 (padding 2 chiffres : `US-01`, `US-02`)
 
-### 2. Brainstorm
+### 2. Phase Brainstorm
 
-Invoque l'agent `ottho-code_brainstorming` via `Task(...)` avec en contexte :
+Invoque l'agent **`ottho-code_brainstorming`** via `Task(...)` avec en contexte :
 - L'objectif : cadrer une nouvelle feature
-- Le contexte projet : si déjà connu via le dossier courant, l'utiliser ; sinon laisser l'agent demander à l'utilisateur de décrire **son** besoin avec ses propres mots, sans suggérer de catégorie de projet pour ne pas biaiser la réponse.
+- Le contexte projet : si déjà connu via le dossier courant, l'utiliser ; sinon laisser l'agent demander à l'utilisateur de décrire **son** besoin sans suggérer de catégorie.
 
-L'agent pose ses **5 questions structurantes** (problème, persona, succès, contraintes, hors-scope) et produit un **cadrage** structuré.
+L'agent pose ses **5 questions structurantes** (problème, persona, succès, contraintes, hors-scope) et produit un cadrage structuré.
 
-**STOP** — affiche le cadrage et demande validation :
+**STOP** — affiche le cadrage et demande validation à l'utilisateur :
 > "Cadrage validé ? Tape `oui` pour passer à la rédaction de la fiche SDD, ou `non` + tes ajustements."
 
-### 3. Specify
+### 3. Phase Specify
 
-Une fois le cadrage validé, invoque l'agent `ottho-code_spec-writer` via `Task(...)` avec en contexte :
-- Le cadrage produit par `ottho-code_brainstorming`
-- Le numéro de US déterminé à l'étape 1
+Une fois le cadrage validé, invoque **`ottho-code_spec-writer`** via `Task(...)` avec :
+- Le cadrage de brainstorming
+- Le numéro de US
 - Le template `${CLAUDE_PLUGIN_ROOT}/templates/feature-spec.md.template`
 
-`ottho-code_spec-writer` produit la fiche dans `specs/US-XX-<slug>.md`.
+L'agent produit la fiche dans `specs/US-XX-<slug>.md`.
 
-### 4. Conclusion
+**STOP** — validation humaine :
+> "Fiche SDD validée ? Tape `oui` pour passer au plan technique, ou `non` + tes ajustements."
 
-Affiche un récap :
+### 4. Phase Plan
+
+Invoque **`ottho-code_architect`** via `Task(...)` avec :
+- Le chemin de la fiche : `specs/US-XX-<slug>.md`
+
+L'agent produit le plan technique dans `plans/US-XX-<slug>.md`, en respectant la **stack imposée non-négociable** (Next.js + Tailwind + shadcn/ui + @supabase/ssr + resend + Vercel, sans Drizzle, sans CI YAML).
+
+**STOP** — validation humaine :
+> "Plan technique validé ? Tape `oui` pour passer à l'implémentation, ou `non` + tes ajustements."
+
+### 5. Phase Implement
+
+Invoque **`ottho-code_developer`** via `Task(...)` avec :
+- Le chemin de la fiche : `specs/US-XX-<slug>.md`
+- Le chemin du plan : `plans/US-XX-<slug>.md`
+
+L'agent crée la branche `feature/US-XX-<slug>`, implémente le code étape par étape, commits atomiques.
+
+**STOP** — validation humaine après l'implémentation initiale :
+> "Implémentation OK ? Tape `oui` pour passer aux tests, ou `non` + tes ajustements."
+
+### 6. Phase Validate
+
+Invoque **`ottho-code_tester`** via `Task(...)` avec :
+- Le chemin de la fiche : `specs/US-XX-<slug>.md`
+- Le chemin du plan : `plans/US-XX-<slug>.md`
+
+L'agent écrit les tests (Vitest, éventuellement Playwright), les exécute, rapporte.
+
+Si tests rouges à cause du code → re-invoque `ottho-code_developer` avec les échecs.
+Si tests verts → fin du cycle.
+
+### 7. Conclusion
+
+Affiche un récap final :
 
 ```
-✅ Phase Specify terminée
+✅ Cycle SDD terminé pour US-XX
 
-📄 Fiche : specs/US-XX-<slug>.md
-🎯 Prochaine étape : génère le code en t'appuyant sur la fiche.
+📄 Fiche SDD : specs/US-XX-<slug>.md
+🛠️  Plan technique : plans/US-XX-<slug>.md
+💻 Code : branche feature/US-XX-<slug>
+🧪 Tests : N tests verts, X% coverage
 
-Exemple de prompt :
-"À partir de ma fiche specs/US-XX-<slug>.md, génère le code Next.js de cette feature.
-Utilise le MCP supabase pour créer les tables avec RLS activée."
-
-Les MCP disponibles :
-- supabase  → BDD, migrations, RLS, types
-- resend    → emails transactionnels
-- vercel    → déploiement (preview + prod)
-- github    → repo, branches, PR
+🎯 Prochaines étapes (hors plugin) :
+  - Push la branche : git push -u origin feature/US-XX-<slug>
+  - Ouvre une PR vers main via le MCP github
+  - Une preview Vercel sera générée automatiquement
+  - Merge la PR → la prod se met à jour automatiquement
 ```
 
 ## Règles strictes
 
 - Une seule feature à la fois (pas de cadrage parallèle).
-- Validation humaine obligatoire entre Brainstorm et Specify.
-- Tu n'écris **pas** de code dans cette commande — elle ne fait que produire la fiche SDD.
-- Tu fonctionnes pour **tout type de projet interne**, sans présupposer le domaine. Laisse l'utilisateur décrire son besoin avec ses propres mots.
+- **Validation humaine obligatoire** entre chaque phase.
+- **Tu n'utilises PAS** le mode plan natif Claude Code, ni les skills `write-plan`/`subagent-driven-development`/`execute-plan`.
+- Si Claude affiche un menu "Subagent-Driven / Parallel Session / Type something / Chat about this", **réponds toujours `Type something` (option 3)** et continue le cycle des agents du plugin.
+- Tu fonctionnes pour **tout type de projet interne**, sans présupposer le domaine.

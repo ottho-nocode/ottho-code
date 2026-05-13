@@ -4,9 +4,16 @@
 
 ### Ajouté
 
-- **2 agents** : `ottho-code_brainstorming` (5 questions structurantes), `ottho-code_spec-writer` (fiche SDD Given-When-Then).
-- **1 skill** : `ottho-code_sdd-feature-cycle` — orchestre Brainstorm → Specify.
-- **1 slash command** : `/new-feature` — démarre le cycle de cadrage.
+- **5 agents** couvrant le cycle SDD complet :
+  - `ottho-code_brainstorming` (5 questions structurantes)
+  - `ottho-code_spec-writer` (fiche SDD Given-When-Then)
+  - `ottho-code_architect` (plan technique, stack stricte)
+  - `ottho-code_developer` (implémentation code, branche feature)
+  - `ottho-code_tester` (tests Vitest, verdict final)
+- **1 skill** : `ottho-code_sdd-feature-cycle` — orchestre les 5 agents en séquence.
+- **1 slash command** : `/ottho-code:new-feature` — démarre le cycle complet.
+- **Stack imposée non-négociable** dans les agents architect/developer/tester : Next.js + Tailwind + shadcn/ui + Supabase + Resend + Vercel. Pas de Drizzle. Pas de GitHub Actions YAML.
+- **Blocage explicite** du mode plan natif Claude Code dans les prompts (évite que Claude propose `Subagent-Driven`/`Parallel Session` après une phase).
 - **4 MCP préconfigurés** : `supabase`, `resend`, `vercel`, `github`.
 - **1 template** : `feature-spec.md.template`.
 - **`userConfig`** : 4 credentials optionnels (Supabase, Resend, Vercel, GitHub), tous `sensitive`.

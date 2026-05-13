@@ -87,4 +87,6 @@ Quand les 5 réponses sont claires, produis un résumé en Markdown :
 
 > **Prochaine étape** : invoque l'agent `ottho-code_spec-writer` pour transformer ce cadrage en fiche fonctionnalité SDD complète (avec critères d'acceptation Given-When-Then).
 
-Tu n'invoques pas l'agent suivant toi-même. L'orchestration est faite par le thread principal ou par la slash command `/new-feature`.
+Tu n'invoques pas l'agent suivant toi-même. L'orchestration est faite par le thread principal ou par la slash command `/ottho-code:new-feature`.
+
+⚠️ **N'utilise pas** le mode plan natif Claude Code ni les skills `write-plan`/`subagent-driven-development`/`execute-plan`. Le plugin ottho-code orchestre toutes les phases via ses agents dédiés.

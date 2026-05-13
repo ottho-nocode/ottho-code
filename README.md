@@ -14,13 +14,18 @@
 
 ## Ce que vous obtenez
 
-- **2 agents spécialisés** : `ottho-code_brainstorming` (pose les 5 questions structurantes) et `ottho-code_spec-writer` (écrit la fiche SDD).
-- **1 skill** : `ottho-code_sdd-feature-cycle` — orchestre les deux agents.
-- **1 slash command** : `/new-feature` — démarre le cycle.
-- **4 MCP préconfigurés** : `supabase`, `resend`, `vercel`, `github`.
-- **1 template** : `feature-spec.md.template` — fiche SDD avec Given-When-Then.
+- **5 agents spécialisés** qui couvrent le cycle SDD complet :
+  - `ottho-code_brainstorming` — 5 questions structurantes pour cadrer
+  - `ottho-code_spec-writer` — fiche SDD Given-When-Then
+  - `ottho-code_architect` — plan technique (stack imposée stricte)
+  - `ottho-code_developer` — code sur branche feature
+  - `ottho-code_tester` — tests Vitest + verdict
+- **1 skill** : `ottho-code_sdd-feature-cycle` — orchestre les 5 agents en séquence
+- **1 slash command** : `/ottho-code:new-feature` — démarre le cycle complet
+- **4 MCP préconfigurés** : `supabase`, `resend`, `vercel`, `github`
+- **1 template** : `feature-spec.md.template`
 
-**Pas de hooks, pas de scripts, pas de complexité cachée.** Le plugin fait une seule chose : aider à produire une fiche SDD de qualité avant que vous demandiez à Claude de coder.
+**Stack imposée non-négociable** : Next.js 16 + Tailwind + shadcn/ui + Supabase (via `@supabase/ssr`, sans ORM) + Resend SDK + Vercel. Pas de Drizzle. Pas de GitHub Actions YAML. Pas de complexité moderne superflue.
 
 ---
 
@@ -118,14 +123,19 @@ Claude se sert des MCP `supabase`, `resend`, `vercel`, `github` pour exécuter.
 
 ---
 
-## Les 2 agents
+## Les 5 agents
 
 | Agent | Rôle | Modèle |
 |---|---|---|
 | `ottho-code_brainstorming` | Pose les 5 questions structurantes pour cadrer une feature | opus |
 | `ottho-code_spec-writer` | Transforme le cadrage en fiche SDD Given-When-Then | sonnet |
+| `ottho-code_architect` | Produit le plan technique selon la stack imposée | opus |
+| `ottho-code_developer` | Implémente le code sur branche feature, commits atomiques | sonnet |
+| `ottho-code_tester` | Écrit et exécute les tests Vitest, donne le verdict final | sonnet |
 
-Chaque agent **recommande** explicitement le suivant à la fin de sa réponse. L'orchestration est faite par le thread principal ou par la slash command `/new-feature`.
+Chaque agent **recommande** explicitement le suivant à la fin de sa réponse. L'orchestration est faite par le thread principal ou par la slash command `/ottho-code:new-feature`.
+
+⚠️ Le plugin **bloque** explicitement le mode plan natif Claude Code (`EnterPlanMode`, `write-plan`, `subagent-driven-development`) pour garder le contrôle de l'orchestration. Si Claude te propose un menu *"Subagent-Driven / Parallel Session / ..."* après une phase, refuse et continue le cycle des agents.
 
 ---
 

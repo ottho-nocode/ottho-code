@@ -63,8 +63,8 @@ Liste explicitement :
 
 > **Fiche SDD écrite** : `specs/US-XX-<slug>.md`
 >
-> **Prochaine étape** : tu peux maintenant prompter Claude directement pour générer le code à partir de cette fiche. Le plugin met à ta disposition les MCP `supabase` (BDD + migrations + RLS), `resend` (emails), `vercel` (déploiement) et `github` (repo + PR).
->
-> **Exemple de prompt** : *"À partir de ma fiche `specs/US-XX-<slug>.md`, génère le code Next.js de cette feature. Utilise le MCP supabase pour créer les tables nécessaires avec RLS activée."*
+> **Prochaine étape** : invoque l'agent `ottho-code_architect` pour produire le plan technique à partir de cette fiche.
 
-Tu n'invoques pas un autre agent. La suite est du dialogue libre avec Claude, guidé par la fiche.
+Tu n'invoques pas un autre agent toi-même. L'orchestration est faite par le thread principal ou par la slash command `/ottho-code:new-feature`.
+
+⚠️ **N'utilise pas** le mode plan natif Claude Code (`/plan`, `EnterPlanMode`, skill `write-plan` ou `subagent-driven-development`) après cette étape. Le plugin ottho-code orchestre toutes les phases via ses agents dédiés.
