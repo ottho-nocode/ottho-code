@@ -21,7 +21,7 @@
   - `ottho-code_developer` → code sur `feature/US-XX-<slug>`
   - `ottho-code_tester` → tests Vitest + verdict
 - **1 skill** : `ottho-code_sdd-feature-cycle` — orchestre les 5 agents en séquence
-- **1 slash command** : `/ottho-code:new-feature` — démarre le cycle complet
+- **7 slash commands** : une commande maître `/ottho-code:new-feature` + une commande par phase pour les workflows partiels (voir tableau ci-dessous)
 - **4 MCP préconfigurés** : `supabase`, `resend`, `vercel`, `github`
 - **2 templates** : `brief.md.template`, `feature-spec.md.template`
 
@@ -65,28 +65,45 @@ Identique fonctionnellement, mais permet de garder le repo localement pour inspe
 
 ---
 
-## Première utilisation
+## Slash commands disponibles
 
-### Démarrer une nouvelle feature
+7 commandes au total. La maîtresse `/ottho-code:new-feature` orchestre tout. Les 5 phases peuvent aussi être lancées individuellement pour itérer.
+
+| Commande | Phase SDD | Livrable produit | Pré-requis |
+|---|---|---|---|
+| `/ottho-code:new-feature` | Cycle complet (5 phases) | brief + spec + plan + code + tests | aucun |
+| `/ottho-code:brainstorm` | Brainstorm | `briefs/US-XX-<slug>.md` | aucun |
+| `/ottho-code:spec` | Specify | `specs/US-XX-<slug>.md` | un brief existant |
+| `/ottho-code:plan` | Plan | `plans/US-XX-<slug>.md` | une spec existante |
+| `/ottho-code:code` | Implement | code sur `feature/US-XX-<slug>` | un plan existant |
+| `/ottho-code:test` | Validate | tests Vitest + rapport | du code sur une branche feature |
+| `/ottho-code:status` | (utilitaire) | tableau d'état du projet | aucun |
+
+### Démarrer une nouvelle feature de bout en bout
 
 ```
-/new-feature
+/ottho-code:new-feature
 ```
 
-Le plugin enchaîne :
+Le plugin orchestre les 5 phases avec une validation humaine entre chaque. Sortie : code mergeable sur `develop`/`main`.
 
-1. **`ottho-code_brainstorming`** pose 5 questions structurantes (problème, persona, succès, dépendances, hors-scope).
-2. **Validation humaine.**
-3. **`ottho-code_spec-writer`** écrit la fiche dans `specs/US-XX-<slug>.md`.
+### Itérer phase par phase
 
-### Ensuite, vous prompez Claude directement
+Si tu veux contrôle plus fin (par exemple, refondre uniquement le plan technique sans toucher au reste) :
 
 ```
-"À partir de ma fiche specs/US-01-formulaire-contact.md, génère le code Next.js de cette feature.
-Utilise le MCP supabase pour créer la table avec RLS activée."
+/ottho-code:plan
 ```
 
-Claude se sert des MCP `supabase`, `resend`, `vercel`, `github` pour exécuter.
+Le plugin liste les fiches existantes (`specs/US-*.md`), tu choisis laquelle, l'agent `ottho-code_architect` produit un nouveau plan.
+
+### Voir où tu en es
+
+```
+/ottho-code:status
+```
+
+Affiche un tableau de toutes les US du projet et leur phase courante.
 
 ---
 
