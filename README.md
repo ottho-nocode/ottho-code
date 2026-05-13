@@ -6,6 +6,29 @@
 
 ---
 
+## ⚡ Démarrage rapide (à lire en premier)
+
+Le plugin a **deux commandes principales** à utiliser dans cet ordre, jamais l'inverse :
+
+```bash
+# 1. Une fois par projet — dans un dossier vide
+/ottho-code:new-project
+
+# 2. Pour chaque user story du projet — après new-project
+/ottho-code:new-feature
+```
+
+| Étape | Quand | Commande | Effet |
+|---|---|---|---|
+| **1** | Dossier vide, démarrage d'un nouveau projet | `/ottho-code:new-project` | Bootstrap Next.js + Tailwind + shadcn/ui + structure SDD (`briefs/`, `specs/`, `plans/`) + `CLAUDE.md` + `.claude/settings.json`. À faire **une seule fois**. |
+| **2** | Projet déjà bootstrappé, ajout d'une feature | `/ottho-code:new-feature` | Cycle SDD complet (5 phases : brainstorm → spec → plan → code → test). À répéter pour **chaque** nouvelle US. |
+
+⚠️ **Ne tape jamais `/ottho-code:new-feature` dans un dossier vide.** La commande refuse de tourner sans `package.json` et te redirige vers `new-project`. C'est intentionnel : `new-feature` n'a aucun sens sans projet existant.
+
+Les **6 autres commandes** (brainstorm, spec, plan, code, test, status) sont des outils d'itération phase par phase, à découvrir après le rail principal.
+
+---
+
 ## Pour qui
 
 - Apprenants du cours Ottho (non-techniques avec bases création de site).
@@ -21,7 +44,7 @@
   - `ottho-code_developer` → code sur `feature/US-XX-<slug>`
   - `ottho-code_tester` → tests Vitest + verdict
 - **1 skill** : `ottho-code_sdd-feature-cycle` — orchestre les 5 agents en séquence
-- **7 slash commands** : une commande maître `/ottho-code:new-feature` + une commande par phase pour les workflows partiels (voir tableau ci-dessous)
+- **8 slash commands** : `new-project` (bootstrap), `new-feature` (cycle complet), et 6 commandes partielles pour itérer phase par phase
 - **4 MCP préconfigurés** : `supabase`, `resend`, `vercel`, `github`
 - **2 templates** : `brief.md.template`, `feature-spec.md.template`
 
