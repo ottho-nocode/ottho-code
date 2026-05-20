@@ -4,13 +4,14 @@
 
 ### Ajouté
 
-- **5 agents** couvrant le cycle SDD complet :
+- **6 agents** couvrant le cycle SDD complet :
   - `ottho-code_brainstorming` (5 questions structurantes)
   - `ottho-code_spec-writer` (fiche SDD Given-When-Then)
-  - `ottho-code_architect` (plan technique, stack stricte)
-  - `ottho-code_developer` (implémentation code, branche feature)
+  - `ottho-code_designer` (brief design + design system partagé) — phase ajoutée pour éviter le piège du shadcn-vanilla générique
+  - `ottho-code_architect` (plan technique, stack stricte, aligné design)
+  - `ottho-code_developer` (implémentation code, branche feature, lit le design system)
   - `ottho-code_tester` (tests Vitest, verdict final)
-- **1 skill** : `ottho-code_sdd-feature-cycle` — orchestre les 5 agents en séquence.
+- **1 skill** : `ottho-code_sdd-feature-cycle` — orchestre les 6 agents en séquence.
 - **1 slash command** : `/ottho-code:new-feature` — démarre le cycle complet.
 - **Stack imposée non-négociable** dans les agents architect/developer/tester : Next.js + Tailwind + shadcn/ui + Supabase + Resend + Vercel. Pas de Drizzle. Pas de GitHub Actions YAML.
 - **Blocage explicite** du mode plan natif Claude Code dans les prompts (évite que Claude propose `Subagent-Driven`/`Parallel Session` après une phase).

@@ -37,16 +37,17 @@ Les **6 autres commandes** (brainstorm, spec, plan, code, test, status) sont des
 
 ## Ce que vous obtenez
 
-- **5 agents spécialisés** qui couvrent le cycle SDD complet, **chacun produisant un livrable `.md`** :
+- **6 agents spécialisés** qui couvrent le cycle SDD complet, **chacun produisant un livrable `.md`** :
   - `ottho-code_brainstorming` → `briefs/US-XX-<slug>.md` (cadrage 5 questions)
   - `ottho-code_spec-writer` → `specs/US-XX-<slug>.md` (fiche Given-When-Then)
-  - `ottho-code_architect` → `plans/US-XX-<slug>.md` (plan technique)
-  - `ottho-code_developer` → code sur `feature/US-XX-<slug>`
+  - `ottho-code_designer` → `design/US-XX-<slug>.md` (+ MAJ `design/system.md`)
+  - `ottho-code_architect` → `plans/US-XX-<slug>.md` (plan technique aligné design)
+  - `ottho-code_developer` → code sur `feature/US-XX-<slug>` (lit le design system)
   - `ottho-code_tester` → tests Vitest + verdict
-- **1 skill** : `ottho-code_sdd-feature-cycle` — orchestre les 5 agents en séquence
-- **8 slash commands** : `new-project` (bootstrap), `new-feature` (cycle complet), et 6 commandes partielles pour itérer phase par phase
+- **1 skill** : `ottho-code_sdd-feature-cycle` — orchestre les 6 agents en séquence
+- **9 slash commands** : `new-project` (bootstrap), `new-feature` (cycle complet), et 7 commandes partielles pour itérer phase par phase
 - **4 MCP préconfigurés** : `supabase`, `resend`, `vercel`, `github`
-- **2 templates** : `brief.md.template`, `feature-spec.md.template`
+- **3 templates** : `brief.md.template`, `feature-spec.md.template`, `design-system.md.template`
 
 **Stack imposée non-négociable** : Next.js 16 + Tailwind + shadcn/ui + Supabase (via `@supabase/ssr`, sans ORM) + Resend SDK + Vercel. Pas de Drizzle. Pas de GitHub Actions YAML. Pas de complexité moderne superflue.
 
@@ -97,11 +98,12 @@ Identique fonctionnellement, mais permet de garder le repo localement pour inspe
 
 | Commande | Phase | Livrable | Pré-requis |
 |---|---|---|---|
-| `/ottho-code:new-project` | **Bootstrap** | Next.js + structure SDD + `CLAUDE.md` | dossier vide |
-| `/ottho-code:new-feature` | Cycle complet (5 phases) | brief + spec + plan + code + tests | un `package.json` existant |
+| `/ottho-code:new-project` | **Bootstrap** | Next.js + structure SDD + `design/system.md` + `CLAUDE.md` | dossier vide |
+| `/ottho-code:new-feature` | Cycle complet (6 phases) | brief + spec + design + plan + code + tests | un `package.json` existant |
 | `/ottho-code:brainstorm` | Brainstorm | `briefs/US-XX-<slug>.md` | aucun |
 | `/ottho-code:spec` | Specify | `specs/US-XX-<slug>.md` | un brief existant |
-| `/ottho-code:plan` | Plan | `plans/US-XX-<slug>.md` | une spec existante |
+| `/ottho-code:design` | Design | `design/US-XX-<slug>.md` (+ MAJ `design/system.md`) | une spec existante |
+| `/ottho-code:plan` | Plan | `plans/US-XX-<slug>.md` | une spec + un design existants |
 | `/ottho-code:code` | Implement | code sur `feature/US-XX-<slug>` | un plan existant |
 | `/ottho-code:test` | Validate | tests Vitest + rapport | du code sur une branche feature |
 | `/ottho-code:status` | (utilitaire) | tableau d'état du projet | aucun |
@@ -183,14 +185,15 @@ Affiche un tableau de toutes les US du projet et leur phase courante.
 
 ---
 
-## Les 5 agents
+## Les 6 agents
 
 | Agent | Rôle | Modèle |
 |---|---|---|
 | `ottho-code_brainstorming` | Pose les 5 questions structurantes pour cadrer une feature | opus |
 | `ottho-code_spec-writer` | Transforme le cadrage en fiche SDD Given-When-Then | sonnet |
-| `ottho-code_architect` | Produit le plan technique selon la stack imposée | opus |
-| `ottho-code_developer` | Implémente le code sur branche feature, commits atomiques | sonnet |
+| `ottho-code_designer` | Produit le brief design + met à jour le design system du projet | opus |
+| `ottho-code_architect` | Produit le plan technique selon la stack imposée et la direction visuelle | opus |
+| `ottho-code_developer` | Implémente le code sur branche feature (lit le design system avant chaque page) | sonnet |
 | `ottho-code_tester` | Écrit et exécute les tests Vitest, donne le verdict final | sonnet |
 
 Chaque agent **recommande** explicitement le suivant à la fin de sa réponse. L'orchestration est faite par le thread principal ou par la slash command `/ottho-code:new-feature`.

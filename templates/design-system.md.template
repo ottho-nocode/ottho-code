@@ -1,0 +1,126 @@
+# Design system, {{NOM_DU_PROJET}}
+
+> Document partagé entre toutes les features du projet. Lu par `ottho-code_designer`, `ottho-code_architect` et `ottho-code_developer` avant chaque feature. Mis à jour quand une feature introduit un nouveau pattern visuel.
+
+---
+
+## 1. Direction artistique
+
+**Ton visuel** : {{TON}} *(ex : sobre et professionnel, énergique et coloré, brutaliste, etc.)*
+
+**Inspirations** :
+- {{REF_1}} *(ex : Linear pour la sobriété, Stripe pour la qualité d'exécution)*
+- {{REF_2}}
+
+---
+
+## 2. Palette
+
+```
+--color-background        : #FFFFFF
+--color-foreground        : #0F172A
+--color-primary           : {{PRIMARY}}      /* couleur d'action principale */
+--color-primary-foreground: #FFFFFF
+--color-muted             : #F8FAFC
+--color-muted-foreground  : #64748B
+--color-border            : #E2E8F0
+--color-success           : #10B981
+--color-warning           : #F59E0B
+--color-error             : #EF4444
+```
+
+Mode sombre : si activé, dupliquer les variables avec le préfixe `dark:`.
+
+---
+
+## 3. Typographie
+
+| Échelle | Taille (px) | Usage |
+|---|---|---|
+| `text-xs` | 12 | Métadonnées, labels secondaires |
+| `text-sm` | 14 | Corps de texte dense, tableaux |
+| `text-base` | 16 | Corps de texte standard |
+| `text-lg` | 18 | Sous-titres |
+| `text-xl` | 20 | Titres de section |
+| `text-2xl` | 24 | Titres de page |
+| `text-3xl` | 30 | Hero, accroches |
+
+**Famille de police** : système par défaut (`-apple-system, BlinkMacSystemFont, "Segoe UI", ...`). Pour une typo personnalisée, ajouter une font via `next/font` et la déclarer ici.
+
+---
+
+## 4. Composants shadcn utilisés
+
+Lister au fur et à mesure les composants installés via `npx shadcn@latest add ...` :
+
+- [ ] `button`
+- [ ] `input`
+- [ ] `label`
+- [ ] `textarea`
+- [ ] `card`
+
+Variants personnalisés (au-delà du vanilla) :
+
+| Composant | Variant | Usage |
+|---|---|---|
+| *(à compléter au fil des features)* | | |
+
+---
+
+## 5. Patterns récurrents
+
+### Header / navigation
+
+À définir au premier passage.
+
+### Empty states
+
+```
+┌─────────────────────────────────┐
+│                                 │
+│         [icône large]           │
+│                                 │
+│      Aucun élément encore       │
+│   {{message d'encouragement}}   │
+│                                 │
+│        [Bouton CTA primaire]    │
+│                                 │
+└─────────────────────────────────┘
+```
+
+### Error states
+
+Format toast en haut à droite, fond `--color-error`, texte blanc, auto-dismiss après 5s.
+
+### Loading states
+
+Skeleton de la même structure que le contenu final (pas de spinner générique).
+
+---
+
+## 6. Spacing
+
+Échelle Tailwind par défaut. Garde-fous :
+
+- Marge externe section : `py-8` à `py-12`
+- Espacement entre composants : `gap-4` ou `gap-6`
+- Padding intérieur Card : `p-6`
+
+---
+
+## 7. Accessibilité (non-négociable)
+
+- Contrastes WCAG AA minimum sur tous les textes.
+- Tailles de cibles tactiles 44×44 px minimum sur mobile.
+- Focus visible sur tous les éléments interactifs (`focus-visible:ring-2`).
+- Ordre du focus naturel (top-down, left-right).
+- Labels ARIA pour les boutons icône.
+
+---
+
+## 8. Inspirations spécifiques par feature
+
+Au fur et à mesure, lier les briefs design par feature ici :
+
+- `design/US-01-<slug>.md` — {{date}}
+- `design/US-02-<slug>.md` — {{date}}

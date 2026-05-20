@@ -1,15 +1,15 @@
 ---
 name: ottho-code_sdd-feature-cycle
-description: Use when the user wants to add a new feature, build a new module, implement a user story, start a new internal project, or asks "how do I build X". Guides through the complete SDD cycle (5 phases) using 5 agents of the ottho-code plugin: brainstorming → spec-writer → architect → developer → tester. Triggers on phrases like "nouvelle feature", "ajouter une fonctionnalité", "nouveau projet interne", "je veux construire".
+description: Use when the user wants to add a new feature, build a new module, implement a user story, start a new internal project, or asks "how do I build X". Guides through the complete SDD cycle (6 phases) using 6 agents of the ottho-code plugin: brainstorming → spec-writer → designer → architect → developer → tester. Triggers on phrases like "nouvelle feature", "ajouter une fonctionnalité", "nouveau projet interne", "je veux construire".
 ---
 
-# Cycle SDD complet — Ottho Code (5 phases)
+# Cycle SDD complet — Ottho Code (6 phases)
 
 Quand l'utilisateur veut **ajouter une fonctionnalité** / **démarrer un nouveau projet interne** / **construire un module** / **implémenter une user story**, applique ce cycle.
 
 ## Principe
 
-5 phases, 5 agents, **toutes orchestrées par le plugin ottho-code**. Tu **n'utilises pas** le mode plan natif Claude Code (`EnterPlanMode`, skills `write-plan`, `subagent-driven-development`, `execute-plan`).
+6 phases, 6 agents, **toutes orchestrées par le plugin ottho-code**. Tu **n'utilises pas** le mode plan natif Claude Code (`EnterPlanMode`, skills `write-plan`, `subagent-driven-development`, `execute-plan`).
 
 Si à un moment Claude te propose un menu "Subagent-Driven / Parallel Session / Type something / Chat about this", **refuse** et continue le cycle des agents du plugin.
 
@@ -34,27 +34,38 @@ Invoque l'agent **`ottho-code_spec-writer`** via `Task(...)`.
 
 **Validation humaine** avant la phase 3.
 
-### Phase 3 — Plan
+### Phase 3 — Design
 
-Invoque l'agent **`ottho-code_architect`** via `Task(...)`.
+Invoque l'agent **`ottho-code_designer`** via `Task(...)`.
 
-- Lit la fiche SDD.
-- Produit le **plan technique** (`plans/US-XX-<slug>.md`).
-- Stack imposée : Next.js + Tailwind + shadcn/ui + @supabase/ssr + resend + Vercel.
+- Lit la fiche SDD et le `design/system.md` du projet.
+- Produit le brief design (`design/US-XX-<slug>.md`) : écrans, composants shadcn, états visuels, micro-interactions, accessibilité.
+- Met à jour `design/system.md` si la feature introduit un nouveau pattern.
+- Recommande `/impeccable` ou `/frontend-design` si la fiche impose un design soigné.
 
 **Validation humaine** avant la phase 4.
 
-### Phase 4 — Implement
+### Phase 4 — Plan
+
+Invoque l'agent **`ottho-code_architect`** via `Task(...)`.
+
+- Lit la fiche SDD, le brief design et le design system.
+- Produit le **plan technique** (`plans/US-XX-<slug>.md`) aligné sur la direction visuelle.
+- Stack imposée : Next.js + Tailwind + shadcn/ui + @supabase/ssr + resend + Vercel.
+
+**Validation humaine** avant la phase 5.
+
+### Phase 5 — Implement
 
 Invoque l'agent **`ottho-code_developer`** via `Task(...)`.
 
 - Crée la branche `feature/US-XX-<slug>`.
 - Implémente le code étape par étape, commits atomiques.
-- Respecte la stack imposée et les conventions définies par l'architect.
+- **Lit `design/system.md` et `design/US-XX-<slug>.md`** avant chaque page pour éviter le shadcn-vanilla générique.
 
-**Validation humaine** avant la phase 5.
+**Validation humaine** avant la phase 6.
 
-### Phase 5 — Validate
+### Phase 6 — Validate
 
 Invoque l'agent **`ottho-code_tester`** via `Task(...)`.
 
@@ -68,6 +79,7 @@ Si tests rouges → re-invoque `ottho-code_developer`. Sinon → fin du cycle.
 
 - Brief : `${CLAUDE_PLUGIN_ROOT}/templates/brief.md.template`
 - Fiche SDD : `${CLAUDE_PLUGIN_ROOT}/templates/feature-spec.md.template`
+- Design system : `${CLAUDE_PLUGIN_ROOT}/templates/design-system.md.template`
 
 ## Récapitulatif visuel
 
@@ -76,14 +88,16 @@ ottho-code_brainstorming  ← briefs/US-XX-<slug>.md  (cadrage)
    ↓ validation humaine
 ottho-code_spec-writer    ← specs/US-XX-<slug>.md  (fiche Given-When-Then)
    ↓ validation humaine
-ottho-code_architect      ← plans/US-XX-<slug>.md  (plan technique)
+ottho-code_designer       ← design/US-XX-<slug>.md  (+ MAJ design/system.md)
+   ↓ validation humaine
+ottho-code_architect      ← plans/US-XX-<slug>.md  (plan technique aligné design)
    ↓ validation humaine
 ottho-code_developer      ← code sur branche feature/US-XX-<slug>
    ↓ validation humaine
 ottho-code_tester         ← tests Vitest + verdict
 ```
 
-Chaque phase produit un livrable `.md` au minimum (SDD strict). Les 3 dossiers `briefs/`, `specs/`, `plans/` sont créés automatiquement à la racine du projet par la slash command `/ottho-code:new-feature`.
+Chaque phase produit un livrable `.md` au minimum (SDD strict). Les 4 dossiers `briefs/`, `specs/`, `design/`, `plans/` sont créés automatiquement à la racine du projet par la slash command `/ottho-code:new-feature`.
 
 ## Stack imposée — non-négociable
 

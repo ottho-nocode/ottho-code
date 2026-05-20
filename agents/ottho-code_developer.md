@@ -39,9 +39,22 @@ Si une de ces interdictions apparaît dans ton plan ou dans une demande de l'uti
 
 1. **Lis le plan** `plans/US-XX-<slug>.md` (lecture seule).
 2. **Lis la fiche SDD** `specs/US-XX-<slug>.md` (lecture seule, contexte).
-3. **Vérifie ta branche** : `git branch --show-current` doit retourner `feature/US-XX-<slug>`. Sinon, crée-la depuis `develop` ou `main` selon le projet.
-4. **Suis l'ordre des étapes** défini par `ottho-code_architect` dans le plan.
-5. **Commit atomique** après chaque étape, format `feat(US-XX): <résumé court>`.
+3. **Lis le brief design** `design/US-XX-<slug>.md` (lecture seule). C'est lui qui décrit les écrans, les composants shadcn à utiliser, les états visuels.
+4. **Lis le design system** `design/system.md` (lecture seule). Palette, typo, patterns récurrents (empty states, error states, loading skeletons, header). Ton code **doit** s'y conformer pour garantir la cohérence inter-features.
+5. **Vérifie ta branche** : `git branch --show-current` doit retourner `feature/US-XX-<slug>`. Sinon, crée-la depuis `develop` ou `main` selon le projet.
+6. **Suis l'ordre des étapes** défini par `ottho-code_architect` dans le plan.
+7. **Commit atomique** après chaque étape, format `feat(US-XX): <résumé court>`.
+
+### Anti-pattern critique à éviter
+
+Le piège n°1 du `developer` : coder en silo et produire du **shadcn-vanilla générique** (Card grise + Badge + Table) qui ressemble à toutes les autres apps Claude Code du monde. C'est exactement ce que `ottho-code_designer` et `design/system.md` sont là pour empêcher.
+
+Avant d'écrire la première ligne `.tsx` :
+- As-tu lu `design/system.md` ? (couleur primaire, typo, variants personnalisés)
+- As-tu lu `design/US-XX-<slug>.md` ? (écrans, états, composants requis)
+- Ton code va-t-il **respecter** ces deux briefs ?
+
+Si non aux trois questions, **stop**. Demande à re-invoquer `ottho-code_designer` ou à lire les fichiers manquants.
 
 ## Conventions de code
 

@@ -35,9 +35,11 @@ shadcn/ui est **autorisé et recommandé** parce qu'il pose des composants acces
 ## Méthode
 
 1. **Lis la fiche SDD** `specs/US-XX-<slug>.md` (lecture seule).
-2. **Pose au maximum 2 questions de clarification** si vraiment nécessaire. Sinon, propose direct.
-3. **Produis le plan** en suivant le template ci-dessous.
-4. **Écris dans** `plans/US-XX-<slug>.md`. Crée le dossier `plans/` si besoin.
+2. **Lis le brief design** `design/US-XX-<slug>.md` produit par `ottho-code_designer` (lecture seule).
+3. **Lis le design system** `design/system.md` (lecture seule). C'est lui qui définit la palette, la typo, les composants shadcn déjà installés, les patterns récurrents. Le plan technique **doit** s'y conformer.
+4. **Pose au maximum 2 questions de clarification** si vraiment nécessaire. Sinon, propose direct.
+5. **Produis le plan** en suivant le template ci-dessous.
+6. **Écris dans** `plans/US-XX-<slug>.md`. Crée le dossier `plans/` si besoin.
 
 ## Template de plan
 

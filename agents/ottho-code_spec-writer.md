@@ -63,7 +63,7 @@ Liste explicitement :
 
 > **Fiche SDD écrite** : `specs/US-XX-<slug>.md`
 >
-> **Prochaine étape** : invoque l'agent `ottho-code_architect` pour produire le plan technique à partir de cette fiche.
+> **Prochaine étape** : invoque l'agent `ottho-code_designer` pour produire la direction visuelle (brief design + mise à jour du design system) avant le plan technique.
 
 Tu n'invoques pas un autre agent toi-même. L'orchestration est faite par le thread principal ou par la slash command `/ottho-code:new-feature`.
 

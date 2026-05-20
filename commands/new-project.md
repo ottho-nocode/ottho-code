@@ -42,8 +42,16 @@ Crée à la racine du projet :
 - `.claude/settings.json` avec le bloc `skillOverrides` complet (10 skills désactivées, voir `/ottho-code:new-feature` pour la liste).
 - Dossier `briefs/` (futurs briefs de brainstorming).
 - Dossier `specs/` (futures fiches SDD).
+- Dossier `design/` (briefs design par feature + design system partagé).
 - Dossier `plans/` (futurs plans techniques).
 - Dossier `docs/` (documentation projet, optionnel).
+
+Crée aussi un squelette de design system à `design/system.md` à partir du template `${CLAUDE_PLUGIN_ROOT}/templates/design-system.md.template`. Demande à l'utilisateur les choix initiaux :
+- **Ton visuel** (sobre/professionnel, énergique, brutaliste, minimaliste, etc.)
+- **Couleur primaire** (hex ou nom)
+- **1-2 inspirations** (Linear, Stripe, Notion, etc.)
+
+Pré-remplis le template avec ces valeurs. L'agent `ottho-code_designer` viendra l'enrichir au fil des features.
 
 ### 4. CLAUDE.md projet
 
@@ -64,17 +72,24 @@ Crée à la racine un fichier `CLAUDE.md` avec ce contenu (adapté au projet) :
 - **CI/CD** : Vercel auto (PAS de GitHub Actions YAML)
 - **Hébergement** : Vercel
 
+## Direction visuelle
+
+Lire systématiquement `design/system.md` avant de produire du code. Ce fichier contient la palette, la typographie, les composants shadcn installés et les patterns visuels du projet. Le mettre à jour quand on introduit un nouveau pattern.
+
 ## Méthode
 
-Toute nouvelle feature passe par le **cycle SDD du plugin ottho-code** (5 phases) :
+Toute nouvelle feature passe par le **cycle SDD du plugin ottho-code** (6 phases) :
 
 1. `/ottho-code:brainstorm` → `briefs/US-XX-<slug>.md`
 2. `/ottho-code:spec` → `specs/US-XX-<slug>.md`
-3. `/ottho-code:plan` → `plans/US-XX-<slug>.md`
-4. `/ottho-code:code` → code sur `feature/US-XX-<slug>`
-5. `/ottho-code:test` → tests Vitest + verdict
+3. `/ottho-code:design` → `design/US-XX-<slug>.md` (+ MAJ `design/system.md`)
+4. `/ottho-code:plan` → `plans/US-XX-<slug>.md`
+5. `/ottho-code:code` → code sur `feature/US-XX-<slug>`
+6. `/ottho-code:test` → tests Vitest + verdict
 
 Ou tout en un : `/ottho-code:new-feature`.
+
+Pour un design poussé (client design-sensitive, exigences UX fortes) : invoquer `/impeccable` ou `/frontend-design` entre la phase Design et la phase Plan.
 
 ## Workflow Git
 

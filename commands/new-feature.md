@@ -43,6 +43,7 @@ Démarre le **cycle SDD complet** du plugin ottho-code. 5 phases, 5 agents, orch
 
 - Si `briefs/` n'existe pas, le créer.
 - Si `specs/` n'existe pas, le créer.
+- Si `design/` n'existe pas, le créer.
 - Si `plans/` n'existe pas, le créer.
 - Détermine le numéro de US :
    - Liste les fichiers `briefs/US-*.md` et `specs/US-*.md`
@@ -71,30 +72,56 @@ Une fois le brief validé, invoque **`ottho-code_spec-writer`** via `Task(...)` 
 L'agent lit le brief et produit la fiche SDD dans `specs/US-XX-<slug>.md`.
 
 **STOP** — validation humaine :
+> "Fiche SDD validée ? Tape `oui` pour passer à la phase Design, ou `non` + tes ajustements."
+
+### 4. Phase Design
+
+Invoque **`ottho-code_designer`** via `Task(...)` avec :
+- Le chemin de la fiche : `specs/US-XX-<slug>.md`
+- Le numéro de US
+
+L'agent lit la fiche, lit (ou crée) `design/system.md`, et produit le brief design dans `design/US-XX-<slug>.md`. Il met aussi à jour `design/system.md` si la feature introduit un nouveau pattern.
+
+Si la fiche SDD impose un design soigné, l'agent te recommandera de lancer `/impeccable` ou `/frontend-design` avant de passer à `architect`. Tu peux le faire à ce stade, c'est le bon moment.
+
+**STOP** — validation humaine :
 > "Fiche SDD validée ? Tape `oui` pour passer au plan technique, ou `non` + tes ajustements."
 
-### 4. Phase Plan
+**STOP** — validation humaine :
+> "Brief design validé ? Tape `oui` pour passer au plan technique, ou `non` + tes ajustements."
+
+### 5. Phase Plan
 
 Invoque **`ottho-code_architect`** via `Task(...)` avec :
 - Le chemin de la fiche : `specs/US-XX-<slug>.md`
+- Le chemin du brief design : `design/US-XX-<slug>.md`
+- Le chemin du design system : `design/system.md`
 
-L'agent produit le plan technique dans `plans/US-XX-<slug>.md`, en respectant la **stack imposée non-négociable** (Next.js + Tailwind + shadcn/ui + @supabase/ssr + resend + Vercel, sans Drizzle, sans CI YAML).
+L'agent produit le plan technique dans `plans/US-XX-<slug>.md`, en respectant la **stack imposée non-négociable** (Next.js + Tailwind + shadcn/ui + @supabase/ssr + resend + Vercel, sans Drizzle, sans CI YAML) **et** en s'alignant sur la direction visuelle du designer.
 
 **STOP** — validation humaine :
 > "Plan technique validé ? Tape `oui` pour passer à l'implémentation, ou `non` + tes ajustements."
 
-### 5. Phase Implement
+**STOP** — validation humaine :
+> "Plan technique validé ? Tape `oui` pour passer à l'implémentation, ou `non` + tes ajustements."
+
+### 6. Phase Implement
 
 Invoque **`ottho-code_developer`** via `Task(...)` avec :
 - Le chemin de la fiche : `specs/US-XX-<slug>.md`
+- Le chemin du brief design : `design/US-XX-<slug>.md`
+- Le chemin du design system : `design/system.md`
 - Le chemin du plan : `plans/US-XX-<slug>.md`
 
-L'agent crée la branche `feature/US-XX-<slug>`, implémente le code étape par étape, commits atomiques.
+L'agent crée la branche `feature/US-XX-<slug>`, implémente le code étape par étape, commits atomiques. Il **doit** se conformer aux fichiers `design/` pour éviter le shadcn-vanilla générique.
 
 **STOP** — validation humaine après l'implémentation initiale :
 > "Implémentation OK ? Tape `oui` pour passer aux tests, ou `non` + tes ajustements."
 
-### 6. Phase Validate
+**STOP** — validation humaine :
+> "Implémentation OK ? Tape `oui` pour passer aux tests, ou `non` + tes ajustements."
+
+### 7. Phase Validate
 
 Invoque **`ottho-code_tester`** via `Task(...)` avec :
 - Le chemin de la fiche : `specs/US-XX-<slug>.md`
@@ -105,7 +132,7 @@ L'agent écrit les tests (Vitest, éventuellement Playwright), les exécute, rap
 Si tests rouges à cause du code → re-invoque `ottho-code_developer` avec les échecs.
 Si tests verts → fin du cycle.
 
-### 7. Conclusion
+### 8. Conclusion
 
 Affiche un récap final :
 
@@ -114,6 +141,7 @@ Affiche un récap final :
 
 📋 Brief : briefs/US-XX-<slug>.md
 📄 Fiche SDD : specs/US-XX-<slug>.md
+🎨 Brief design : design/US-XX-<slug>.md
 🛠️  Plan technique : plans/US-XX-<slug>.md
 💻 Code : branche feature/US-XX-<slug>
 🧪 Tests : N tests verts, X% coverage
